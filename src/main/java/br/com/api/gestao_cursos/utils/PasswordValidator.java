@@ -11,27 +11,11 @@ public class PasswordValidator {
 
 
     public static boolean isPasswordStrongSecurity(String password){
-        //Agora vamos testar cada uma das vars acima
-        if (password.length() < MIN_LENGTH){
-            return false;
-        }
-        if (password.length() > MAX_LENGTH){
-            return false;
-        }
-        if (!NUMERIC_PATTERN.matcher(password).find()){
-            return false;
-        }
-        if (!LOWER_CASE_STRING_PATTERN.matcher(password).find()){
-            return false;
-        }
-        if (!UPPER_CASE_STRING_PATTERN.matcher(password).find()){
-            return false;
-        }
-
-        return true;
-    }
-
-    public static void main(String[] args) {
-        System.out.println(isPasswordStrongSecurity("11"));
+        //Agora vamos testar cada uma das vars acima em formato mais enxuto
+        return password.length() > MIN_LENGTH &&
+                password.length() <= MAX_LENGTH &&
+                NUMERIC_PATTERN.matcher(password).find() &&
+                LOWER_CASE_STRING_PATTERN.matcher(password).find() &&
+                UPPER_CASE_STRING_PATTERN.matcher(password).find();
     }
 }

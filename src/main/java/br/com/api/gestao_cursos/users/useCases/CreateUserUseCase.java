@@ -1,12 +1,12 @@
 package br.com.api.gestao_cursos.users.useCases;
 
 import br.com.api.gestao_cursos.users.entities.UserEntity;
+import br.com.api.gestao_cursos.utils.EmailValidator;
 
 import java.util.regex.Pattern;
 
 public class CreateUserUseCase {
 
-    private static final String regexPattern = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$";
 
     public void create(UserEntity userEntity){
         //1.Não deve ser possível que usuário se cadastre sem preencher todos os campos obrigatórios.
@@ -15,11 +15,9 @@ public class CreateUserUseCase {
         }
 
         //2. Não deve ser possível que o usuário se cadastre uzando um e-mail em formato inválido
-        Pattern pattern = Pattern.compile(regexPattern);
-        if (pattern.matcher(userEntity.getEmail()).matches()) {
-            throw new RuntimeException("Email está em formato inválido!");
+        if (!EmailValidator.validateEmail(userEntity.getEmail())){
+            throw new RuntimeException("Email inválido!");
         }
-
 
         //2.1. Não deve ser possível que o usuário se cadastre uzando um e-mail que esteja cadastrado no sistema.
         //3. O usuário pode cadastrar senhas em texto simples; comprimento mínimo, caracteres especiais

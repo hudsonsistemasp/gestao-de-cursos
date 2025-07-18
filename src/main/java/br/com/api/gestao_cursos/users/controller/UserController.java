@@ -1,5 +1,6 @@
 package br.com.api.gestao_cursos.users.controller;
 
+import br.com.api.gestao_cursos.exceptions.ValidationException;
 import br.com.api.gestao_cursos.users.dto.CreateUserRequestDto;
 import br.com.api.gestao_cursos.users.entities.UserEntity;
 import br.com.api.gestao_cursos.users.useCases.CreateUserUseCase;
@@ -21,7 +22,11 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<String> create(@RequestBody CreateUserRequestDto userRequestDto){
-        String result = this.createUserUseCase.validateData(userRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        try {
+            String result = this.createUserUseCase.validateData(userRequestDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body(result);
+        } catch (ValidationException e) {
+            return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
+        }
     }
 }

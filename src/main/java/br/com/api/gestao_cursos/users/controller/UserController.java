@@ -21,9 +21,9 @@ public class UserController {
     private CreateUserUseCase createUserUseCase;
 
     @PostMapping("/create")
-    public ResponseEntity<String> create(@RequestBody CreateUserRequestDto userRequestDto){
+    public ResponseEntity<?> create(@RequestBody CreateUserRequestDto userRequestDto){
         try {
-            String result = this.createUserUseCase.validateData(userRequestDto);
+            UserEntity result = this.createUserUseCase.validateData(userRequestDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(result);
         } catch (ValidationException e) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());

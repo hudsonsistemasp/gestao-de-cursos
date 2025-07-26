@@ -1,6 +1,7 @@
 package br.com.api.gestao_cursos.users.entities;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -10,6 +11,7 @@ import java.util.UUID;
 
 @Entity
 @Data
+@Builder
 @Table(name = "tb_user")
 public class UserEntity implements Serializable {
 

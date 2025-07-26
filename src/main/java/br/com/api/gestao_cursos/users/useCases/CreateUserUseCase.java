@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 /*Como eu preciso usar essa classe na DTO, logo vou fazer o Spring instanciar
 isso para mim, usando a anotação @Service e esta ficar disponível para uso como
@@ -22,6 +23,7 @@ public class CreateUserUseCase {
     UserRepository userRepository;
 
     public UserEntity validateData(CreateUserRequestDto userRequestDto){
+
         //1.Não deve ser possível que usuário se cadastre sem preencher todos os campos obrigatórios.
         if (userRequestDto.getName().isEmpty() || userRequestDto.getPassword().trim().isEmpty() || userRequestDto.getRole() == null) {
             throw new ValidationException("Dados incompletos, favor preencheer todos os campos!");
@@ -38,16 +40,24 @@ public class CreateUserUseCase {
         }
 
         //2.1. Não deve ser possível que o usuário se cadastre uzando um e-mail que esteja cadastrado no sistema.
-        //4. O sistema envie um e-mail de confirmação para o endereço fornecido pelo usuário após o cadastro
-        //5.Não deve ser possível que o sistema envie o e-mail de confirmação se a verificação dos dados do usuário falhar.
+        Optional<UserEntity> userEntityByEmail = this.userRepository.findByEmail(userRequestDto.getEmail());
+        if (userEntityByEmail.isPresent()){
+            throw new ValidationException("Email já cadastrado no sistema!");
+        }
 
-        UserEntity userEntity = new UserEntity();
-        userEntity.setName(userRequestDto.getName());
-        userEntity.setEmail(userRequestDto.getEmail());
-        userEntity.setPassword(userRequestDto.getPassword());
-        userEntity.setRole(userRequestDto.getRole());
-        userEntity.setCreatedAt(LocalDateTime.now());
-        userEntity.setUpdateAt(LocalDate.now());
-        return userRepository.save(userEntity);
+        //TODO: 4. O sistema envie um e-mail de confirmação para o endereço fornecido pelo usuário após o cadastro
+        //TODO: 5.Não deve ser possível que o sistema envie o e-mail de confirmação se a verificação dos dados do usuário falhar.
+
+
+        UserEntity entitySaved = UserEntity.builder()
+                .name(userRequestDto.getName())
+                .email(userRequestDto.getEmail())
+                .password(userRequestDto.getPassword())
+                .role(userRequestDto.getRole())
+                .createdAt(LocalDateTime.now())
+                .updateAt(LocalDate.now())
+                .build();
+
+        return userRepository.save(entitySaved);
     }
 }

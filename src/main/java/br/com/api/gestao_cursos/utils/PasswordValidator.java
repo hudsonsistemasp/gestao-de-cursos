@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class PasswordValidator {
     private static final int MIN_LENGTH= 8;
-    private static final int MAX_LENGTH = 20;
+    private static final int MAX_LENGTH = 220;
     private static final Pattern UPPER_CASE_STRING_PATTERN = Pattern.compile("[A-Z]");
     private static final Pattern LOWER_CASE_STRING_PATTERN = Pattern.compile("[a-z]");
     private static final Pattern NUMERIC_PATTERN = Pattern.compile("[0-9]");

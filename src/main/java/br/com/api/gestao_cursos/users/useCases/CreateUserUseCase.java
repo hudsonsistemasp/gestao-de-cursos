@@ -7,6 +7,7 @@ import br.com.api.gestao_cursos.users.entities.UserEntity;
 import br.com.api.gestao_cursos.utils.EmailValidator;
 import br.com.api.gestao_cursos.utils.PasswordValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -20,7 +21,10 @@ um serviço de validação de dados. Assim injeto como dependência em outras cl
 public class CreateUserUseCase {
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public UserEntity validateData(CreateUserRequestDto userRequestDto){
 
@@ -45,17 +49,19 @@ public class CreateUserUseCase {
             throw new ValidationException("Email já cadastrado no sistema!");
         }
 
-        //TODO: 4. O sistema envie um e-mail de confirmação para o endereço fornecido pelo usuário após o cadastro
-        //TODO: 5.Não deve ser possível que o sistema envie o e-mail de confirmação se a verificação dos dados do usuário falhar.
+        //TODO: 4. Criptografar o password do usuário antes de salvá-lo
+        String passwordCrypt = passwordEncoder.encode(userRequestDto.getPassword());
+        //TODO: 5. O sistema envie um e-mail de confirmação para o endereço fornecido pelo usuário após o cadastro
+        //TODO: 6.Não deve ser possível que o sistema envie o e-mail de confirmação se a verificação dos dados do usuário falhar.
 
 
         UserEntity entitySaved = UserEntity.builder()
                 .name(userRequestDto.getName())
                 .email(userRequestDto.getEmail())
-                .password(userRequestDto.getPassword())
+                .password(passwordCrypt)
                 .role(userRequestDto.getRole())
-                .createdAt(LocalDateTime.now())
-                .updateAt(LocalDate.now())
+                //.createdAt(LocalDateTime.now())
+                //.updateAt(LocalDate.now())
                 .build();
 
         return userRepository.save(entitySaved);

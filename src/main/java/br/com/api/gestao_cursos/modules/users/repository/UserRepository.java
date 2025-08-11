@@ -1,6 +1,6 @@
 package br.com.api.gestao_cursos.repository;
 
-import br.com.api.gestao_cursos.users.entities.UserEntity;
+import br.com.api.gestao_cursos.modules.users.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

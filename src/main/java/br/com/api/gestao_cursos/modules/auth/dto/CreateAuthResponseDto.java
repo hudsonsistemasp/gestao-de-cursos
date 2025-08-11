@@ -7,10 +7,11 @@ import java.util.Date;
 
 @Data
 @Builder
-public class CreateAuthResponse {
+public class CreateAuthResponseDto {
 
     private String access_token;
     private Date expires_in;
+    private Date created_at;
 
 
 

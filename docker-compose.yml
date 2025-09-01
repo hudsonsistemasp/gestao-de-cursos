@@ -14,20 +14,6 @@ services:
     networks:
       - gestao_cursos_network
 
-  gestao_app:
-    build: .
-    container_name: gestao_cursos_app
-    ports:
-      - "8080:8080"
-    depends_on:
-      - postgresql
-    networks:
-      - gestao_cursos_network
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/db_gestao_cursos
-      SPRING_DATASOURCE_USERNAME: admin
-      SPRING_DATASOURCE_PASSWORD: admin
-
 volumes:
   postgresql_data:
 

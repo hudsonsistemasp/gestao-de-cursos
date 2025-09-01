@@ -47,7 +47,7 @@ public class SecurityFilter extends OncePerRequestFilter {
                 authorities.add(new SimpleGrantedAuthority("ROLE_" + claims.toString()));
                 UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
                         resultToken.getPayload().getSubject(),null,authorities);
-                request.setAttribute("userId", userId);
+                request.setAttribute("userId", userId);//Está na var acima do resultToken
                 SecurityContextHolder.getContext().setAuthentication(auth);//Garantindo a individualidade de cada user àquela requisição
 
             } catch (Exception e) {

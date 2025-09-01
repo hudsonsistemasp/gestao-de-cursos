@@ -20,6 +20,7 @@ Não deve ser possível que:
 4.	O cadastro seja concluído com uma senha que não atenda aos critérios de complexidade definidos (ex: comprimento mínimo, caracteres especiais).
 5.	O sistema envie o e-mail de confirmação se a verificação dos dados do usuário falhar.
 
+---------------------------------------------------------------------------------------------------------------------------------------
 
 Caso de Uso 2: Cadastro de um novo curso
 Pós condições:
@@ -41,3 +42,52 @@ Não deve ser possível que:
 2. O sistema permitir a criação do curso, se as informações inseridas não atenderem aos critérios de validação, como formato incorreto ou dados ausentes
 3. O sistema salvar o curso se ocorrer um erro durante o processo de criação ou salvamento, e o administrador não receber uma mensagem de erro apropriada.
 4. O curso não deve aparecer na lista de cursos se a criação falhar ou houver um erro durante o processo.
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Caso de Uso 3: Inscrição do Aluno no curso
+    Objetivo: Permitir que um aluno se inscreva em um curso disponível na plataforma, garantindo que a inscrição seja processada corretamente e que o aluno esteja apto a participar do curso.
+
+Pré-condições:
+•  O aluno deve estar autenticado na plataforma.
+•  O curso deve estar disponível
+
+Requisitos funcionais:
+
+Deve ser possível que:
+•  O Aluno visualize a lista de curso disponíveis; ok
+•  O Aluno acesse detalhes do curso; ok
+•  O Aluno se inscreva em um curso, somente se estiver autenticado; MatriculaCurso(CourseEnrollmentEntity) ok
+•  O sistema evite múltiplas inscrições do mesmo alno em um mesmo curso; ok
+•  O Sistema confirme a inscrição e forneça o feedback ao aluno; ok
+•  O sistema envie uma confirmação de inscrição por e-mail(opcional);
+
+Não deve ser possível que:
+•  O Aluno se inscreva em um curso sem estar autenticado;ok
+•  O Aluno se inscreva em um curso que não está mais disponível; ok
+•  O Aluno se inscreva em um curso no qual já está inscrito;ok
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+Caso de Uso 4: Cadastro de Módulo de curso
+    Objetivo: Permitir que o instrutor do curso cadastre novos módulos no sistema, associando-os a cursos existentes. Esse cadastro deve incluir informações como o nome do módulo, descrição e ordem de aprensentação.
+
+Pré-condições:
+•  O usuário deve estar autenticado na plataforma com permissão de instrutor;
+•  O curso ao qual o módulo será associado, já deve estar cadastrado no sistema; ok
+•  O curso deve pertencer ao instrutor autenticado; ok
+
+Requisitos funcionais:
+
+Deve ser possível:
+•  Cadastrar um novo módulo: O sistema deve permitir que o instrutor crie um novo módulo inserindo informações como: nome, descrição, ordem e apresentação
+•  Associar o módulo a um curso existente. O módulo deve ser vinculado a um curso específico.
+•  Definir a ordem dos módulos: O sistema deve permitir que o administrador/instrutor defina a ordem em que os módulos aparecerão no curso.
+
+
+Não deve ser possível que:
+•  Cadastrar um módulo sem associá-lo a um curso. Todo módulo deve estar vinculado a um curso existente
+•  Cadastrar módulos com o mesmo nome no mesmo curso. O sistema deve impedir a duplicação de nomes de módulos dentro do mesmo curso.
+•  Cadastrar um módulo com dados inválidos.
+•  Cadastrar um módulo onde o instrutor do curso não for o instrutor autenticado
+•  Cadastrar algum módulo em uma posição que já esteja ocupada, ou seja, módulos não podem ter a mesma ordem de exibição, cada posição deve ser única. ok

@@ -2,11 +2,17 @@ package br.com.api.gestao_cursos.modulesComponents.modulesCourse.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateModuleRequestDto {
 
     @NotNull(message = "Id do curso é obrigatório")

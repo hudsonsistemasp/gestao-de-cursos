@@ -5,7 +5,7 @@ import br.com.api.gestao_cursos.modulesComponents.courses.dto.CreateCourseListPa
 import br.com.api.gestao_cursos.modulesComponents.courses.dto.CreateCourseRequestDto;
 import br.com.api.gestao_cursos.modulesComponents.courses.entities.CourseEntity;
 import br.com.api.gestao_cursos.modulesComponents.courses.repository.CourseRepository;
-import br.com.api.gestao_cursos.modulesComponents.courses.useCaseService.CreateCourseUseCase;
+import br.com.api.gestao_cursos.modulesComponents.courses.useCaseService.CreateCourseUseCaseService;
 import br.com.api.gestao_cursos.modulesComponents.courses.useCaseService.ListPageCourseUseCase;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -25,7 +25,7 @@ public class CourseController {
     ListPageCourseUseCase listPageCourseUseCase;
 
     @Autowired
-    private CreateCourseUseCase createCourseUseCase;
+    private CreateCourseUseCaseService createCourseUseCaseService;
 
     @Autowired
     private CourseRepository courseRepository;
@@ -37,7 +37,7 @@ public class CourseController {
                                     @Valid @RequestBody CreateCourseRequestDto createCourseRequestDto) {
         String userIdDaRequest = request.getAttribute("userId").toString();//"userId" atributo que criei na classe SecurityFilter.java
         try{
-            CourseEntity courseEntity = createCourseUseCase.validateData(createCourseRequestDto, userIdDaRequest);
+            CourseEntity courseEntity = createCourseUseCaseService.validateData(createCourseRequestDto, userIdDaRequest);
             return ResponseEntity.status(HttpStatus.CREATED).body("Curso Criado com sucesso!");
         } catch (ValidationException e) {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());

@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ListPageCourseUseCase {
@@ -20,6 +21,8 @@ public class ListPageCourseUseCase {
     @Autowired
     ConvertEntityToDto convertEntityToDto;
 
+
+    @Transactional(readOnly = true)
     public CreateCourseListPage getAllCourses(int numberOfPage, int amountByPage, String orderBy, String orderAscOrDesc) {
 
         Sort sortBy = orderAscOrDesc.equalsIgnoreCase("asc") ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending();

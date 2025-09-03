@@ -6,7 +6,9 @@ import br.com.api.gestao_cursos.modulesComponents.enrollment.repository.CourseEn
 import br.com.api.gestao_cursos.modulesComponents.users.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,6 +22,7 @@ public class CreateEnrollmentUseCaseService {
     @Autowired
     private CourseEnrollmentRepository courseEnrollmentRepository;
 
+    @Transactional(readOnly = false, rollbackFor = {SQLException.class})
     public UUID createEnrollment(UUID courseId, UUID studentId){
         //Não deve ser possível que:
         //O Aluno se inscreva se não existir cadastro deste

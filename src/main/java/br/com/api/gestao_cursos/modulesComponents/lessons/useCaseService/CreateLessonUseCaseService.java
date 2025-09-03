@@ -7,7 +7,9 @@ import br.com.api.gestao_cursos.modulesComponents.modulesCourse.entity.ModuleCou
 import br.com.api.gestao_cursos.modulesComponents.modulesCourse.repository.ModuleCourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,6 +22,7 @@ public class CreateLessonUseCaseService {
     @Autowired
     private ModuleCourseRepository moduleCourseRepository;
 
+    @Transactional(readOnly = false, rollbackFor = {SQLException.class})
     public LessonsEntity create(UUID idUserRequest, LessonsRequestDto lessonsRequestDto) throws Exception {
 
         //    Não deve ser possível que:

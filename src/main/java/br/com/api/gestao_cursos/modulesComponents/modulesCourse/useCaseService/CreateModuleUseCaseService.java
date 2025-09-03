@@ -8,7 +8,9 @@ import br.com.api.gestao_cursos.modulesComponents.modulesCourse.entity.ModuleCou
 import br.com.api.gestao_cursos.modulesComponents.modulesCourse.repository.ModuleCourseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,6 +29,7 @@ public class CreateModuleUseCaseService {
     @Autowired
     private ModuleCourseRepository moduleCourseRepository;
 
+    @Transactional(readOnly = false, rollbackFor = {SQLException.class})
     public ModuleCourseEntity create(CreateModuleRequestDto createModuleRequestDto, UUID idUserRequest) throws Exception {
         // O usuário deve estar autenticado na plataforma com permissão de instrutor;==colocar no Controller
         // O curso ao qual o módulo será associado, já deve estar cadastrado no sistema;==no courseRepository

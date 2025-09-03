@@ -9,7 +9,9 @@ import br.com.api.gestao_cursos.utils.PasswordValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 /*Como eu preciso usar essa classe na DTO, logo vou fazer o Spring instanciar
@@ -24,6 +26,7 @@ public class CreateUserUseCaseService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Transactional(readOnly = false, rollbackFor = {SQLException.class})
     public UserEntity validateData(CreateUserRequestDto userRequestDto) throws ValidationException {
 
         //1.Não deve ser possível que usuário se cadastre sem preencher todos os campos obrigatórios.

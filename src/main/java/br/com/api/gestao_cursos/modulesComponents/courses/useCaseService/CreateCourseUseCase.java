@@ -7,7 +7,9 @@ import br.com.api.gestao_cursos.modulesComponents.courses.entities.CourseEntity;
 import br.com.api.gestao_cursos.modulesComponents.users.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.SQLException;
 import java.util.UUID;
 
 @Service
@@ -19,6 +21,7 @@ public class CreateCourseUseCase {
     @Autowired
     private UserRepository userRepository;
 
+    @Transactional(readOnly = false, rollbackFor = {SQLException.class})
     public CourseEntity validateData(CreateCourseRequestDto createCourseRequestDto, String instructorId) throws Exception {
 
         //Verificar se o instructor existe na tabela antes de ele ser cadastrado no curso

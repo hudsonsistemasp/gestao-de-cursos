@@ -14,11 +14,9 @@ public interface ModuleCourseRepository extends JpaRepository<ModuleCourseEntity
     // módulos não podem ter a mesma ordem de exibição, cada posição deve ser única.
     Optional<ModuleCourseEntity> findByDisplayOrder(Integer displayOrder);
 
-    //
-
     //Não deve Cadastrar algum módulo, num curso, em uma posição que já esteja ocupada, ou seja,
     // módulos não podem ter a mesma ordem de exibição, cada posição deve ser única.
-    ModuleCourseEntity findByCourseIdAndDisplayOrder(UUID courseId, Integer displayOrder);
+    Optional<ModuleCourseEntity> findByCourseIdAndTitleAndDisplayOrder(UUID courseId, String title, Integer displayOrder);
 
     //Não deve cadastrar módulos com o mesmo nome para o mesmo curso
     Optional<ModuleCourseEntity> findByTitleAndCourseId(String title, UUID idCourse);

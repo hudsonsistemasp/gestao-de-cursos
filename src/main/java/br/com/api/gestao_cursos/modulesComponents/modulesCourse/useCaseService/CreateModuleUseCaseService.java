@@ -45,7 +45,8 @@ public class CreateModuleUseCaseService {
         }
         
         //Verificar se o módulo existe no sistema com o mesmo nome para o mesmo curso
-        var moduleTitleToCourseID = moduleCourseRepository.findByTitleAndCourseId(createModuleRequestDto.getTitle(), createModuleRequestDto.getIdCourse());
+        var moduleTitleToCourseID = moduleCourseRepository.findByTitleAndCourseId(createModuleRequestDto.getTitle(),
+                createModuleRequestDto.getIdCourse());
         if (moduleTitleToCourseID.isPresent()) {
             throw new Exception("Módulo já está cadastrado no sistema com este Título.");
         }
@@ -59,9 +60,9 @@ public class CreateModuleUseCaseService {
 
         //Não deve Cadastrar algum módulo com o mesmo nome, num curso, em uma posição que já esteja ocupada, ou seja,
         // módulos não podem ter a mesma ordem de exibição, cada posição deve ser única.
-        ModuleCourseEntity moduleCourse = moduleCourseRepository.findByCourseIdAndDisplayOrder(createModuleRequestDto.getIdCourse(),
-                createModuleRequestDto.getDisplayOrder());
-        if (moduleCourse != null) {
+        Optional<ModuleCourseEntity> moduleCourse = moduleCourseRepository.findByCourseIdAndTitleAndDisplayOrder(createModuleRequestDto.getIdCourse(),
+                createModuleRequestDto.getTitle(), createModuleRequestDto.getDisplayOrder());
+        if (moduleCourse.isPresent()) {
             throw new Exception("Módulo existe na posição de exibição informada do curso, favor verificar!");
         }
 
@@ -74,7 +75,6 @@ public class CreateModuleUseCaseService {
                 .description(createModuleRequestDto.getDescription())
                 .displayOrder(createModuleRequestDto.getDisplayOrder())
                 .build();
-
 
         return moduleCourseRepository.save(moduleCourseEntity);
     }

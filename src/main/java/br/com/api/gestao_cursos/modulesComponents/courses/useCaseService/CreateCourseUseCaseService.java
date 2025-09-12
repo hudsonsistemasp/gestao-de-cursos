@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.util.UUID;
 
 @Service
-public class CreateCourseUseCase {
+public class CreateCourseUseCaseService {
 
     @Autowired
     private CourseRepository courseRepository;

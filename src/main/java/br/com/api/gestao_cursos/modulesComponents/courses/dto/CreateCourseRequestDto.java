@@ -2,11 +2,15 @@ package br.com.api.gestao_cursos.modulesComponents.courses.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class CreateCourseRequestDto {
 
     @NotBlank(message = "Não pode estar vazio")

@@ -53,8 +53,8 @@ public class CreateModuleUseCaseService {
 
         //Não deve Cadastrar algum módulo, num curso, em uma posição que já esteja ocupada, ou seja,
         // módulos não podem ter a mesma ordem de exibição, cada posição deve ser única.
-        var moduleCourseById = moduleCourseRepository.findByDisplayOrder(createModuleRequestDto.getDisplayOrder());
-        if (moduleCourseById.isPresent()){
+        var moduleCourseByDisplayOrder = moduleCourseRepository.findByDisplayOrder(createModuleRequestDto.getDisplayOrder());
+        if (moduleCourseByDisplayOrder.isPresent()){
             throw new Exception("A ordem de exibição já está ocupada por outro módulo.");
         }
 

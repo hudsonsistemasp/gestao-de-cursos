@@ -30,7 +30,8 @@ public class CreateUserUseCaseService {
     public UserEntity validateData(CreateUserRequestDto userRequestDto) throws ValidationException {
 
         //1.Não deve ser possível que usuário se cadastre sem preencher todos os campos obrigatórios.
-        if (userRequestDto.getName().isEmpty() || userRequestDto.getPassword().trim().isEmpty() || userRequestDto.getRole() == null) {
+        if (userRequestDto.getName().isEmpty() || userRequestDto.getPassword().trim().isEmpty()
+                || userRequestDto.getRole() == null) {
             throw new ValidationException("Dados incompletos, favor preencheer todos os campos!");
         }
 

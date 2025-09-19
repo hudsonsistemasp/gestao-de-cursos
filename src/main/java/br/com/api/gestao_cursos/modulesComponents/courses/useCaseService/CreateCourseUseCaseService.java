@@ -31,10 +31,10 @@ public class CreateCourseUseCaseService {
 
         /*Não deve ser possível que:
         1. O professor criar um curso sem preencher todos os campos obrigatórios ou com informações inválidas.*/
-        if (createCourseRequestDto.getTitle().isEmpty() || createCourseRequestDto.getTitle().trim().isBlank()){
+        if (createCourseRequestDto.getTitle().isEmpty() || createCourseRequestDto.getTitle().isBlank()){
             throw new ValidationException("Curso necessita de ter titulo!");
         }
-        if (createCourseRequestDto.getDescription().trim().isEmpty() || createCourseRequestDto.getDescription().trim().isBlank() || createCourseRequestDto.getDescription() == null){
+        if (createCourseRequestDto.getDescription().isEmpty() || createCourseRequestDto.getDescription().isBlank()){
             throw new ValidationException("Curso necessita de ter descrição!");
         }
 

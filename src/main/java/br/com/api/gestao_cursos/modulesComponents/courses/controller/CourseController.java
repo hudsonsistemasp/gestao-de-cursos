@@ -6,7 +6,7 @@ import br.com.api.gestao_cursos.modulesComponents.courses.dto.CreateCourseReques
 import br.com.api.gestao_cursos.modulesComponents.courses.entities.CourseEntity;
 import br.com.api.gestao_cursos.modulesComponents.courses.repository.CourseRepository;
 import br.com.api.gestao_cursos.modulesComponents.courses.useCaseService.CreateCourseUseCaseService;
-import br.com.api.gestao_cursos.modulesComponents.courses.useCaseService.ListPageCourseUseCase;
+import br.com.api.gestao_cursos.modulesComponents.courses.useCaseService.ListPageCourseUseCaseService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import java.util.List;
 public class CourseController {
 
     @Autowired
-    ListPageCourseUseCase listPageCourseUseCase;
+    ListPageCourseUseCaseService listPageCourseUseCaseService;
 
     @Autowired
     private CreateCourseUseCaseService createCourseUseCaseService;
@@ -67,7 +67,7 @@ public class CourseController {
                                                                 @RequestParam String orderBy,
                                                                 @RequestParam String orderAscOrDesc){
 
-        return ResponseEntity.ok(listPageCourseUseCase.
+        return ResponseEntity.ok(listPageCourseUseCaseService.
                 getAllCourses(numberOfPage, amountByPage, orderBy, orderAscOrDesc));
     }
 

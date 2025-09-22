@@ -27,7 +27,11 @@ public class ListPageCourseUseCaseService {
                                               String orderBy, String orderAscOrDesc) {
 
     Sort sortBy = orderAscOrDesc.equalsIgnoreCase("asc") ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending();
+    //Pageable é um objeto que representa a requisição da paginação(numDepáginas,tamanho,ordenação)
     Pageable pageable = PageRequest.of(numberOfPage, amountByPage, sortBy);
+        //Page já é o resultado paginado, da requisição e contém:
+        // a lista dos elementos(getContent());
+        //Informação da paginação: (getTotalElements(), getTotalPages()...)
     Page<CourseEntity> courseEntityPage = courseRepository.findAll(pageable);
 
     CreateCourseListPage courseListPage = new CreateCourseListPage();

@@ -23,20 +23,20 @@ public class ListPageCourseUseCase {
 
 
     @Transactional(readOnly = true)
-    public CreateCourseListPage getAllCourses(int numberOfPage, int amountByPage, String orderBy, String orderAscOrDesc) {
+    public CreateCourseListPage getAllCourses(int numberOfPage, int amountByPage,
+                                              String orderBy, String orderAscOrDesc) {
 
-        Sort sortBy = orderAscOrDesc.equalsIgnoreCase("asc") ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending();
-        Pageable pageable = PageRequest.of(numberOfPage, amountByPage, sortBy);
-        Page<CourseEntity> courseEntityPage = courseRepository.findAll(pageable);
+    Sort sortBy = orderAscOrDesc.equalsIgnoreCase("asc") ? Sort.by(orderBy).ascending() : Sort.by(orderBy).descending();
+    Pageable pageable = PageRequest.of(numberOfPage, amountByPage, sortBy);
+    Page<CourseEntity> courseEntityPage = courseRepository.findAll(pageable);
 
+    CreateCourseListPage courseListPage = new CreateCourseListPage();
+    courseListPage.setContentPage(convertEntityToDto.toListCourseDto(courseEntityPage.getContent()));
+    courseListPage.setNumPageActual(courseEntityPage.getNumber());
+    courseListPage.setAmountByPage(courseEntityPage.getSize());
+    courseListPage.setTotalRecords(courseEntityPage.getTotalElements());
+    courseListPage.setTotalPages(courseEntityPage.getTotalPages());
 
-        CreateCourseListPage courseListPage = new CreateCourseListPage();
-        courseListPage.setContentPage(convertEntityToDto.toListCourseDto(courseEntityPage.getContent()));
-        courseListPage.setNumPageActual(courseEntityPage.getNumber());
-        courseListPage.setAmountByPage(courseEntityPage.getSize());
-        courseListPage.setTotalRecords(courseEntityPage.getTotalElements());
-        courseListPage.setTotalPages(courseEntityPage.getTotalPages());
-
-        return courseListPage;
+    return courseListPage;
     }
 }

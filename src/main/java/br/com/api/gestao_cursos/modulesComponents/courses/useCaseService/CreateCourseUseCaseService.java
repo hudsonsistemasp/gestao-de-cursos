@@ -41,9 +41,7 @@ public class CreateCourseUseCaseService {
         //2. Cadastrar curso com o mesmo nome
         var courseTitleEntity = courseRepository.findByTitle(createCourseRequestDto.getTitle());
         if (courseTitleEntity.isPresent()) {
-            if (courseTitleEntity.get().getTitle().trim().equals(createCourseRequestDto.getTitle().trim())) {
                 throw new Exception("Curso já está cadastrado.");
-            }
         }
 
         //Converter para Entity

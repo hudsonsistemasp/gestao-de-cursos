@@ -36,8 +36,7 @@ public class CreateEnrollmentUseCaseService {
         }
 
         //O Aluno se inscreva em um curso no qual já está inscrito;
-        Optional<CourseEnrollmentEntity> courseEnrollmentEntity =  courseEnrollmentRepository.findByCourseIdAndStudentId(courseId, studentId);
-        if (courseEnrollmentEntity.isPresent()){
+        if (courseEnrollmentRepository.findByCourseIdAndStudentId(courseId, studentId).isPresent()){
             throw new RuntimeException("Aluno já está inscrito neste curso.");
         }
 

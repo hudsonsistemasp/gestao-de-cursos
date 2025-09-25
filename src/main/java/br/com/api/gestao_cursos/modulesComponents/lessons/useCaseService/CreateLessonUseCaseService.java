@@ -27,18 +27,16 @@ public class CreateLessonUseCaseService {
 
         //    Não deve ser possível que:
         Optional<ModuleCourseEntity> moduleCourseEntity = moduleCourseRepository.findById(lessonsRequestDto.getIdModuleCourse());
+        //Cadastrar uma lesson em um módulo que não existe
+        if (moduleCourseEntity.isEmpty()){
+            throw new Exception("Módulo não está cadastrado no sistema");
+        }
 
         //Cadastrar uma lesson onde o instrutor do curso não for o instrutor autenticado
         //Recuperar o ID do instructor associado ao curso e comparar com o do Request
         if (!moduleCourseEntity.get().getCourse().getInstructorId().equals(idUserRequest)){
             throw new Exception("Instructor não autorizado para esta operação.");
         }
-
-        //Cadastrar uma lesson em um módulo que não existe
-        if (!moduleCourseEntity.isPresent()){
-            throw new Exception("Módulo não está cadastrado no sistema");
-        }
-
 
         //Verificar se a aula existe no banco, caso exista lança exception, pois não pode ter o mesmo nome no mesmo Módulo.
         if (lessonRepository.findByTitleAndIdModuleCourse

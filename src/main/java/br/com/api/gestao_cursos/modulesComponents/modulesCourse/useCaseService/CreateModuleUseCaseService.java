@@ -48,7 +48,7 @@ public class CreateModuleUseCaseService {
         var moduleTitleToCourseID = moduleCourseRepository.findByTitleAndCourseId(createModuleRequestDto.getTitle(),
                 createModuleRequestDto.getIdCourse());
         if (moduleTitleToCourseID.isPresent()) {
-            throw new Exception("Módulo já está cadastrado no sistema com este Título.");
+            throw new Exception("Módulo já está cadastrado no sistema com este Título para este curso!");
         }
 
         //Não deve Cadastrar algum módulo, num curso, em uma posição que já esteja ocupada, ou seja,
@@ -57,15 +57,6 @@ public class CreateModuleUseCaseService {
         if (moduleCourseByDisplayOrder.isPresent()){
             throw new Exception("A ordem de exibição já está ocupada por outro módulo.");
         }
-
-        //Não deve Cadastrar algum módulo com o mesmo nome, num curso, em uma posição que já esteja ocupada, ou seja,
-        // módulos não podem ter a mesma ordem de exibição, cada posição deve ser única.
-        Optional<ModuleCourseEntity> moduleCourse = moduleCourseRepository.findByCourseIdAndTitleAndDisplayOrder(createModuleRequestDto.getIdCourse(),
-                createModuleRequestDto.getTitle(), createModuleRequestDto.getDisplayOrder());
-        if (moduleCourse.isPresent()) {
-            throw new Exception("Módulo existe na posição de exibição informada do curso, favor verificar!");
-        }
-
 
         //SALVAR O MÓDULO NO CURSO
         //Montar o Entity com o builder

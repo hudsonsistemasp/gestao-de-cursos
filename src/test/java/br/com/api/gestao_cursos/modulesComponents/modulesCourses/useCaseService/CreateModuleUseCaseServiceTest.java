@@ -49,7 +49,6 @@ public class CreateModuleUseCaseServiceTest {
         verify(courseRepository, times(1)).findById(any());
     }
 
-
     @Test
     void shouldThrowsExceptionWhenInstructorIdIsNotAuthorized(){
         //Given
@@ -89,7 +88,7 @@ public class CreateModuleUseCaseServiceTest {
         Exception exception = assertThrows(Exception.class, () -> {
             createModuleUseCaseService.create(createModuleRequestDto, idUserRequest);
         });
-        assertEquals("Módulo já está cadastrado no sistema com este Título.", exception.getMessage());
+        assertEquals("Módulo já está cadastrado no sistema com este Título para este curso!", exception.getMessage());
         verify(moduleCourseRepository, times(1)).findByTitleAndCourseId(any(), any());
     }
 
@@ -135,7 +134,6 @@ public class CreateModuleUseCaseServiceTest {
         when(courseRepository.findById(idCourse)).thenReturn(Optional.of(course));
         when(moduleCourseRepository.findByTitleAndCourseId("Novo Módulo", idCourse)).thenReturn(Optional.empty());
         when(moduleCourseRepository.findByDisplayOrder(1)).thenReturn(Optional.empty());
-        when(moduleCourseRepository.findByCourseIdAndTitleAndDisplayOrder(idCourse, "Novo Módulo", 1)).thenReturn(Optional.empty());
         when(moduleCourseRepository.save(any(ModuleCourseEntity.class))).thenReturn(expectedModule);
 
         ModuleCourseEntity result = createModuleUseCaseService.create(dto, idUser);
@@ -160,7 +158,6 @@ public class CreateModuleUseCaseServiceTest {
         when(courseRepository.findById(idCourse)).thenReturn(Optional.of(courseEntity));
         when(moduleCourseRepository.findByTitleAndCourseId("module test", idCourse)).thenReturn(Optional.empty());
         when(moduleCourseRepository.findByDisplayOrder(1)).thenReturn(Optional.empty());
-        when(moduleCourseRepository.findByCourseIdAndTitleAndDisplayOrder(idCourse, "module test", 1)).thenReturn(Optional.empty());
         when(moduleCourseRepository.save(any(ModuleCourseEntity.class))).thenReturn(expectedModuleCourseEntity);
         //then
         ModuleCourseEntity result = createModuleUseCaseService.create(createModuleRequestDto, idUserRequest);
@@ -168,7 +165,6 @@ public class CreateModuleUseCaseServiceTest {
         verify(courseRepository, times(1)).findById(idCourse);
         verify(moduleCourseRepository, times(1)).findByTitleAndCourseId("module test", idCourse);
         verify(moduleCourseRepository, times(1)).findByDisplayOrder(1);
-        verify(moduleCourseRepository, times(1)).findByCourseIdAndTitleAndDisplayOrder(idCourse, "module test", 1);
         verify(moduleCourseRepository, times(1)).save(any());
     }
 
@@ -197,10 +193,6 @@ public class CreateModuleUseCaseServiceTest {
         //4° Não deve Cadastrar algum módulo, num curso, em uma posição que já esteja ocupada
         when(moduleCourseRepository.findByDisplayOrder(1))
                 .thenReturn(Optional.empty());
-        //5° Não deve Cadastrar algum módulo com o mesmo nome, num curso, em uma posição que já esteja ocupada
-        when(moduleCourseRepository.findByCourseIdAndTitleAndDisplayOrder(
-                createModuleRequestDto.getIdCourse(), "title module test", 1))
-                .thenReturn(Optional.empty());
 
         //Mockar o ENTITY que vai ser retornado do bando de dados após ter salvado o Dto no repository
         ModuleCourseEntity moduleCourseEntitySaved = returnModuleCourseEntitySaved();
@@ -226,8 +218,6 @@ public class CreateModuleUseCaseServiceTest {
                 .displayOrder(1)
                 .build();
     }
-
-
 
     private static ModuleCourseEntity returnModuleCourseEntitySaved(){
 

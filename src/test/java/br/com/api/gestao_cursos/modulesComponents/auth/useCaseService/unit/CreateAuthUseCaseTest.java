@@ -1,6 +1,7 @@
-package br.com.api.gestao_cursos.modulesComponents.auth.useCaseService;
+package br.com.api.gestao_cursos.modulesComponents.auth.useCaseService.unit;
 
 import br.com.api.gestao_cursos.modulesComponents.auth.dto.CreateAuthRequestDto;
+import br.com.api.gestao_cursos.modulesComponents.auth.useCaseService.CreateAuthUseCase;
 import br.com.api.gestao_cursos.modulesComponents.users.entities.RoleUser;
 import br.com.api.gestao_cursos.modulesComponents.users.entities.UserEntity;
 import br.com.api.gestao_cursos.modulesComponents.users.repository.UserRepository;
@@ -8,7 +9,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;

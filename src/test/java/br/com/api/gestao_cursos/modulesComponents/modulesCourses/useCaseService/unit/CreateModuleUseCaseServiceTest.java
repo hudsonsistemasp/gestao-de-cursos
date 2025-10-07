@@ -1,4 +1,4 @@
-package br.com.api.gestao_cursos.modulesComponents.modulesCourses.useCaseService;
+package br.com.api.gestao_cursos.modulesComponents.modulesCourses.useCaseService.unit;
 
 import br.com.api.gestao_cursos.exceptions.ForbbidenException;
 import br.com.api.gestao_cursos.modulesComponents.courses.entities.CourseEntity;

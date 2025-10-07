@@ -1,12 +1,11 @@
-package br.com.api.gestao_cursos.modulesComponents.users.useCaseService;
+package br.com.api.gestao_cursos.modulesComponents.users.useCaseService.unit;
 
 import br.com.api.gestao_cursos.exceptions.ValidationException;
-import br.com.api.gestao_cursos.modulesComponents.modulesCourse.dto.CreateModuleRequestDto;
 import br.com.api.gestao_cursos.modulesComponents.users.dto.CreateUserRequestDto;
 import br.com.api.gestao_cursos.modulesComponents.users.entities.RoleUser;
 import br.com.api.gestao_cursos.modulesComponents.users.entities.UserEntity;
 import br.com.api.gestao_cursos.modulesComponents.users.repository.UserRepository;
-import jakarta.validation.Valid;
+import br.com.api.gestao_cursos.modulesComponents.users.useCaseService.CreateUserUseCaseService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

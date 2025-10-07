@@ -1,9 +1,10 @@
-package br.com.api.gestao_cursos.modulesComponents.lessons.useCaseService;
+package br.com.api.gestao_cursos.modulesComponents.lessons.useCaseService.unit;
 
 import br.com.api.gestao_cursos.modulesComponents.courses.entities.CourseEntity;
 import br.com.api.gestao_cursos.modulesComponents.lessons.dto.LessonsRequestDto;
 import br.com.api.gestao_cursos.modulesComponents.lessons.entity.LessonsEntity;
 import br.com.api.gestao_cursos.modulesComponents.lessons.repository.LessonRepository;
+import br.com.api.gestao_cursos.modulesComponents.lessons.useCaseService.CreateLessonUseCaseService;
 import br.com.api.gestao_cursos.modulesComponents.modulesCourse.entity.ModuleCourseEntity;
 import br.com.api.gestao_cursos.modulesComponents.modulesCourse.repository.ModuleCourseRepository;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package br.com.api.gestao_cursos.modulesComponents.enrollment;
+package br.com.api.gestao_cursos.modulesComponents.enrollment.unit;
 
 import br.com.api.gestao_cursos.modulesComponents.courses.repository.CourseRepository;
 import br.com.api.gestao_cursos.modulesComponents.enrollment.entity.CourseEnrollmentEntity;
@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;

@@ -1,22 +1,21 @@
-package br.com.api.gestao_cursos.modulesComponents.courses.useCaseService;
+package br.com.api.gestao_cursos.modulesComponents.courses.useCaseService.unit;
 
 import br.com.api.gestao_cursos.modulesComponents.courses.dto.CreateCourseListPage;
 import br.com.api.gestao_cursos.modulesComponents.courses.dto.CreateCourseRequestDto;
 import br.com.api.gestao_cursos.modulesComponents.courses.entities.CourseEntity;
 import br.com.api.gestao_cursos.modulesComponents.courses.repository.CourseRepository;
+import br.com.api.gestao_cursos.modulesComponents.courses.useCaseService.ListPageCourseUseCaseService;
 import br.com.api.gestao_cursos.modulesComponents.courses.utils.ConvertEntityToDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

@@ -46,7 +46,7 @@ public class CreateEnrollmentUseCaseServiceTest {
         when(userRepository.findById(studentId)).thenReturn(Optional.empty());
         //then
         RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> {
-            UUID result = createEnrollmentUseCaseService.createEnrollment(courseId, studentId);
+            CourseEnrollmentEntity result = createEnrollmentUseCaseService.createEnrollment(courseId, studentId);
         });
 
         assertEquals("Estudante não encontrado no cadastro do sistema.", runtimeException.getMessage());
@@ -62,7 +62,7 @@ public class CreateEnrollmentUseCaseServiceTest {
         when(courseRepository.existsById(courseId)).thenReturn(false);
         //then
         RuntimeException runtimeException = assertThrows(RuntimeException.class, ()->{
-            UUID result = createEnrollmentUseCaseService.createEnrollment(courseId, studentId);
+            CourseEnrollmentEntity result = createEnrollmentUseCaseService.createEnrollment(courseId, studentId);
         });
         assertEquals("Curso não está mais disponível.", runtimeException.getMessage());
         verify(userRepository, times(1)).findById(any());
@@ -79,7 +79,7 @@ public class CreateEnrollmentUseCaseServiceTest {
         when(courseEnrollmentRepository.findByCourseIdAndStudentId(courseId, studentId)).thenReturn(Optional.of(new CourseEnrollmentEntity()));
         //then
         RuntimeException runtimeException = assertThrows(RuntimeException.class, () -> {
-            UUID result = createEnrollmentUseCaseService.createEnrollment(courseId, studentId);
+            CourseEnrollmentEntity result = createEnrollmentUseCaseService.createEnrollment(courseId, studentId);
         });
         assertEquals("Aluno já está inscrito neste curso.", runtimeException.getMessage());
         verify(userRepository, times(1)).findById(any());
@@ -93,7 +93,6 @@ public class CreateEnrollmentUseCaseServiceTest {
         UUID courseId = UUID.randomUUID();
         UUID courseEnrollmentId = UUID.randomUUID();
         String titleCourseEnrollment = "title test Enrollment";
-        UUID enrollmentSavedId = UUID.randomUUID();
         var courseEnrollmentRequest = CourseEnrollmentEntity.builder()
                 .studentId(studentId)
                 .courseId(courseId)
@@ -112,8 +111,8 @@ public class CreateEnrollmentUseCaseServiceTest {
         when(courseEnrollmentRepository.findByCourseIdAndStudentId(courseId, studentId)).thenReturn(Optional.empty());
         when(courseEnrollmentRepository.save(courseEnrollmentRequest)).thenReturn(courseEnrollmentEntityResult);
         //then
-        UUID result = createEnrollmentUseCaseService.createEnrollment(courseId, studentId);
-        assertEquals(courseEnrollmentId, result);
+        CourseEnrollmentEntity result = createEnrollmentUseCaseService.createEnrollment(courseId, studentId);
+        assertEquals(courseEnrollmentId, result.getId());
 
         verify(userRepository,times(1)).findById(any());
         verify(courseRepository,times(1)).existsById(any());

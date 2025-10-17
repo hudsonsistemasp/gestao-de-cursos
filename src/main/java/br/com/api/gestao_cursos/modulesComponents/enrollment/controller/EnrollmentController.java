@@ -1,5 +1,6 @@
 package br.com.api.gestao_cursos.modulesComponents.enrollment.controller;
 
+import br.com.api.gestao_cursos.modulesComponents.enrollment.entity.CourseEnrollmentEntity;
 import br.com.api.gestao_cursos.modulesComponents.enrollment.useCaseService.CreateEnrollmentUseCaseService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -28,7 +29,8 @@ public class EnrollmentController {
                                     @Valid @RequestBody UUID courseId){
         try {
             var studentId = UUID.fromString(request.getAttribute("userId").toString());//O nome da propriedade tem que ser igual ao que está na classe SecurityFilter
-            return ResponseEntity.ok(createEnrollmentUseCaseService.createEnrollment(courseId, studentId));
+            CourseEnrollmentEntity enrollmentEntity = createEnrollmentUseCaseService.createEnrollment(courseId, studentId);
+            return ResponseEntity.status(HttpStatus.OK).body(enrollmentEntity.getId());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

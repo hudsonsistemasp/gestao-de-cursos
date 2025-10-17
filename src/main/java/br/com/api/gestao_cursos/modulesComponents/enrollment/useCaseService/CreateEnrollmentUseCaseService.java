@@ -1,8 +1,10 @@
 package br.com.api.gestao_cursos.modulesComponents.enrollment.useCaseService;
 
+import br.com.api.gestao_cursos.modulesComponents.courses.entities.CourseEntity;
 import br.com.api.gestao_cursos.modulesComponents.courses.repository.CourseRepository;
 import br.com.api.gestao_cursos.modulesComponents.enrollment.entity.CourseEnrollmentEntity;
 import br.com.api.gestao_cursos.modulesComponents.enrollment.repository.CourseEnrollmentRepository;
+import br.com.api.gestao_cursos.modulesComponents.users.entities.UserEntity;
 import br.com.api.gestao_cursos.modulesComponents.users.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,10 +25,11 @@ public class CreateEnrollmentUseCaseService {
     private CourseEnrollmentRepository courseEnrollmentRepository;
 
     @Transactional(readOnly = false, rollbackFor = {SQLException.class})
-    public UUID createEnrollment(UUID courseId, UUID studentId){
+    public CourseEnrollmentEntity createEnrollment(UUID courseId, UUID studentId){
         //Não deve ser possível que:
         //O Aluno se inscreva se não existir cadastro deste
-        if (userRepository.findById(studentId).isEmpty()){
+        Optional<UserEntity> userEntity = userRepository.findById(studentId);
+        if (userEntity.isEmpty()){
             throw new RuntimeException("Estudante não encontrado no cadastro do sistema.");
         }
 
@@ -41,9 +44,13 @@ public class CreateEnrollmentUseCaseService {
         }
 
         //Fazer inscrição do student no curso
-        var courseEnrollment = CourseEnrollmentEntity.builder().studentId(studentId).courseId(courseId).build();
+        var courseEnrollment = CourseEnrollmentEntity.builder()
+                .studentId(studentId)
+                .courseId(courseId)
+                //.userEntity(new UserEntity(userEntity.get().getId(), userEntity.get().getName(), userEntity.get().getEmail(), userEntity.get().getPassword(), userEntity.get().getRole(), userEntity.get().getCreatedAt(), userEntity.get().getUpdateAt()))
+                .build();
         CourseEnrollmentEntity courseSaved = courseEnrollmentRepository.save(courseEnrollment);
-        return courseSaved.getId();
+        return courseSaved;
     }
 
 }

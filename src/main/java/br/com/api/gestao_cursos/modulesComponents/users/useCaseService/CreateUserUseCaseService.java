@@ -51,7 +51,7 @@ public class CreateUserUseCaseService {
             throw new ValidationException("Email já cadastrado no sistema!");
         }
 
-        //TODO: 4. Criptografar o password do usuário antes de salvá-lo
+        //4. Criptografar o password do usuário antes de salvá-lo
         String passwordCrypt = passwordEncoder.encode(userRequestDto.getPassword());
         //TODO: 5. O sistema envie um e-mail de confirmação para o endereço fornecido pelo usuário após o cadastro
         //TODO: 6.Não deve ser possível que o sistema envie o e-mail de confirmação se a verificação dos dados do usuário falhar.

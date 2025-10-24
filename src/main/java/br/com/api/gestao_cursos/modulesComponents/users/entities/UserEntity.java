@@ -39,6 +39,6 @@ public class UserEntity implements Serializable {
 
     @Column(name = "update_at")
     @UpdateTimestamp
-    private LocalDate updateAt;
+    private LocalDateTime updateAt;
 
 }

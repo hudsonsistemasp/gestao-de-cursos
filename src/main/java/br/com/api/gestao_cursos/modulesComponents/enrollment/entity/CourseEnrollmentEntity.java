@@ -36,6 +36,10 @@ public class CourseEnrollmentEntity {
     @Column(name = "student_id")
     private UUID studentId;
 
+    @ManyToOne
+    @JoinColumn(name = "student_id", insertable = false, updatable = false)
+    private UserEntity userEntity;
+
     @NotBlank(message = "Id do curso é obrigatório")
     @Column(name = "course_id")
     private UUID courseId;
@@ -46,10 +50,6 @@ public class CourseEnrollmentEntity {
     @JoinColumn(name = "course_id", insertable=false, updatable=false)
     private CourseEntity courseEntity;
 
-
-    @ManyToOne
-    @JoinColumn(name = "student_id", insertable = false, updatable = false)
-    private UserEntity userEntity;
     //---------RELACIONAMENTO DAS CLASSES - FIM
 
     @Column(name = "created_at")

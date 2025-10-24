@@ -4,8 +4,8 @@ services:
     image: postgres:17
     container_name: db_gestao_cursos_postgres
     environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
       POSTGRES_DB: db_gestao_cursos
     ports:
       - "5432:5432"

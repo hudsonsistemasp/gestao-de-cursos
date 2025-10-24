@@ -164,7 +164,7 @@ public class CreateUserUseCaseServiceTest {
                 .password("passwordTest*12")
                 .role(RoleUser.student)
                 .createdAt(LocalDateTime.now())
-                .updateAt(LocalDate.now())
+                .updateAt(LocalDateTime.now())
                 .build();
 
         //when

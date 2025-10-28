@@ -46,11 +46,16 @@ public class CreateAuthUseCase {
 
         //Credenciais do user que existe
         String userExistsPassword = userEntity.get().getPassword();//Como é um Optional, tenho que dar um get() no objeto user
-        String userExistsEmail = userEntity.get().getPassword();//Este password está criptografado
+        String userExistsEmail = userEntity.get().getEmail();
 
         //Credenciais do usuário da autenticação
         String userAuthRequestEmail = createAuthRequestDto.getEmail();
         String userAuthRequestPassword = createAuthRequestDto.getPassword();
+
+        //verificar se os usuários são iguais
+        if (!userExistsEmail.equals(userAuthRequestEmail)) {
+            throw new UsernameNotFoundException("Email ou senha não conferem.");
+        }
 
         //Verificar se as senhas conferem
         boolean passwordEquals = passwordEncoder.matches(userAuthRequestPassword, userExistsPassword);

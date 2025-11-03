@@ -104,83 +104,83 @@ public class UserControllerIT {
 
     }
 
-@Test
-void shouldThrowsExceptionWhenRoleUserIsNull() throws Exception {
-    //dados de entrada
-    CreateUserRequestDto createUserRequestDto = CreateUserRequestDto.builder()
-            .name("user Name Test")
-            .email("email@test.com")
-            .password("passwordTest")
-            .role(null)
-            .build();
-    //transformar num json string para passar no content
-    String jsonContent = objectMapper.writeValueAsString(createUserRequestDto);
-    mockMvc.perform(MockMvcRequestBuilders.post(uriTest)
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(jsonContent))
-            .andExpect(MockMvcResultMatchers.status().isBadRequest())
-            .andExpect(MockMvcResultMatchers.content().string("[{\"message\":\"Obrigatório preenhcer a Role do usuário\",\"field\":\"role\"}]"));
+    @Test
+    void shouldThrowsExceptionWhenRoleUserIsNull() throws Exception {
+        //dados de entrada
+        CreateUserRequestDto createUserRequestDto = CreateUserRequestDto.builder()
+                .name("user Name Test")
+                .email("email@test.com")
+                .password("passwordTest")
+                .role(null)
+                .build();
+        //transformar num json string para passar no content
+        String jsonContent = objectMapper.writeValueAsString(createUserRequestDto);
+        mockMvc.perform(MockMvcRequestBuilders.post(uriTest)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(jsonContent))
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().string("[{\"message\":\"Obrigatório preenhcer a Role do usuário\",\"field\":\"role\"}]"));
 
-}
+    }
 
-@Test
-void shouldBeThrowsExceptionWhenEmailIsInvalid() throws Exception {
-    CreateUserRequestDto createUserRequestDto = CreateUserRequestDto.builder()
-            .name("User Request Test")
-            .email("email-invalid")
-            .role(RoleUser.student)
-            .password("SenhaForte@123")
-            .build();
-    String jsonContent = objectMapper.writeValueAsString(createUserRequestDto);
-    mockMvc.perform(MockMvcRequestBuilders.post(uriTest)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(jsonContent))
-            .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
-            .andExpect(MockMvcResultMatchers.content().string("Email inválido!"));
-}
+    @Test
+    void shouldBeThrowsExceptionWhenEmailIsInvalid() throws Exception {
+        CreateUserRequestDto createUserRequestDto = CreateUserRequestDto.builder()
+                .name("User Request Test")
+                .email("email-invalid")
+                .role(RoleUser.student)
+                .password("SenhaForte@123")
+                .build();
+        String jsonContent = objectMapper.writeValueAsString(createUserRequestDto);
+        mockMvc.perform(MockMvcRequestBuilders.post(uriTest)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonContent))
+                .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
+                .andExpect(MockMvcResultMatchers.content().string("Email inválido!"));
+    }
 
-@Test
-void shouldBeThrowsExceptionWhenPasswordIsWeak() throws Exception {
-     //entrada dos dados
-    CreateUserRequestDto createUserRequestDto = CreateUserRequestDto.builder()
-            .name("user test")
-            .email("email@email.com")
-            .password("pass")
-            .role(RoleUser.instructor)
-            .build();
-    //converter o objeto acima para passar no parâmetro content
-    String jsonStringRequest = objectMapper.writeValueAsString(createUserRequestDto);
-    //chamar o endpoint
-    mockMvc.perform(MockMvcRequestBuilders.post(uriTest)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(jsonStringRequest))
-            .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
-            .andExpect(MockMvcResultMatchers.content().string("Senha não atende aos requisitos de segurança!"));
-}
+    @Test
+    void shouldBeThrowsExceptionWhenPasswordIsWeak() throws Exception {
+         //entrada dos dados
+        CreateUserRequestDto createUserRequestDto = CreateUserRequestDto.builder()
+                .name("user test")
+                .email("email@email.com")
+                .password("pass")
+                .role(RoleUser.instructor)
+                .build();
+        //converter o objeto acima para passar no parâmetro content
+        String jsonStringRequest = objectMapper.writeValueAsString(createUserRequestDto);
+        //chamar o endpoint
+        mockMvc.perform(MockMvcRequestBuilders.post(uriTest)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonStringRequest))
+                .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
+                .andExpect(MockMvcResultMatchers.content().string("Senha não atende aos requisitos de segurança!"));
+    }
 
-@Test
-void shouldBeThrowsWhenUserEmailAlreadyExists() throws Exception {
-     //Dados de entrada da requisição
-    CreateUserRequestDto createUserRequestDto = buildValidUserDtoForRequest();
+    @Test
+    void shouldBeThrowsWhenUserEmailAlreadyExists() throws Exception {
+         //Dados de entrada da requisição
+        CreateUserRequestDto createUserRequestDto = buildValidUserDtoForRequest();
 
-    UserEntity entitySaved = UserEntity.builder()
-            .name(createUserRequestDto.getName())
-            .email(createUserRequestDto.getEmail())
-            .password(createUserRequestDto.getPassword())
-            .role(createUserRequestDto.getRole())
-            .build();
-    //O mesmo objeto do request tem que ser igual ao que existe no banco
-    userRepository.save(entitySaved);
+        UserEntity entitySaved = UserEntity.builder()
+                .name(createUserRequestDto.getName())
+                .email(createUserRequestDto.getEmail())
+                .password(createUserRequestDto.getPassword())
+                .role(createUserRequestDto.getRole())
+                .build();
+        //O mesmo objeto do request tem que ser igual ao que existe no banco
+        userRepository.save(entitySaved);
 
-    //Chamar o endpoint
-    var jsonStringDto = objectMapper.writeValueAsBytes(createUserRequestDto);
-    mockMvc.perform(MockMvcRequestBuilders.post(uriTest)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(jsonStringDto))
-            .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
-            .andExpect(MockMvcResultMatchers.content().string("Email já cadastrado no sistema!"));
+        //Chamar o endpoint
+        var jsonStringDto = objectMapper.writeValueAsBytes(createUserRequestDto);
+        mockMvc.perform(MockMvcRequestBuilders.post(uriTest)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonStringDto))
+                .andExpect(MockMvcResultMatchers.status().isUnprocessableEntity())
+                .andExpect(MockMvcResultMatchers.content().string("Email já cadastrado no sistema!"));
 
-}
+    }
 
     public static CreateUserRequestDto buildValidUserDtoForRequest(){
         return CreateUserRequestDto.builder()
